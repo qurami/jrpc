@@ -1,0 +1,6 @@
+use_frameworks!
+target 'jrpc_Tests' do
+  pod 'jrpc', :path => '../'
+  
+  
+end

@@ -1,0 +1,16 @@
+PODS:
+  - jrpc (0.1.0)
+
+DEPENDENCIES:
+  - jrpc (from `../`)
+
+EXTERNAL SOURCES:
+  jrpc:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  jrpc: e8643119074060dcc0a0b76730cc183aeb113f41
+
+PODFILE CHECKSUM: 05477d023300667a9574c6d13457f64ab2644cc9
+
+COCOAPODS: 1.2.0.beta.1

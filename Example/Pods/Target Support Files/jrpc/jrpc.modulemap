@@ -1,0 +1,6 @@
+framework module jrpc {
+  umbrella header "jrpc-umbrella.h"
+
+  export *
+  module * { export * }
+}

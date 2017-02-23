@@ -1,0 +1,22 @@
+{
+  "name": "jrpc",
+  "version": "0.1.0",
+  "summary": "A short description of jrpc.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/qurami-robot/jrpc",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "qurami-robot": "mar.musella@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/qurami-robot/jrpc.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "jrpc/Classes/**/*"
+}
