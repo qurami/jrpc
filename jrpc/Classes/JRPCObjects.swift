@@ -8,29 +8,52 @@
 
 import Foundation
 
-enum JRPCRequestError: Error{
+public enum JRPCRequestError: Error{
     case missingID
     case missingMethod
     case badParameters
 }
 
-struct JRPCRequest{
-    let id: String
-    let jsonRPC = "2.0"
-    let method: String
-    let params: Any?
+public struct JRPCRequest{
     
-    init(id:String, method: String, params: Any?) throws {
-        guard !id.isEmpty else{
+    public let id: String
+    public let jsonRPC = "2.0"
+    public let method: String
+    public let params: Any?
+    
+    public init(id:String, method: String, params: Any?) throws {
+        guard !id.trimmingCharacters(in: CharacterSet.whitespaces).isEmpty else{
             throw JRPCRequestError.missingID
         }
-        guard !method.isEmpty else{
+        
+        guard !method.trimmingCharacters(in: CharacterSet.whitespaces).isEmpty else{
             throw JRPCRequestError.missingMethod
         }
+        
+        guard JRPCRequest.parametersAreValid(params) else{
+            throw JRPCRequestError.badParameters
+        }
+        
         
         self.id = id
         self.method = method
         self.params = params
+    }
+    
+    static func parametersAreValid(_ params: Any?) -> Bool{
+        
+        switch params {
+        case nil:
+            return true
+        case let p as Array<Any>:
+            return true
+        case let p as Dictionary<String, Any>:
+            return true
+        default:
+            return false
+        }
+        
+
     }
 }
 
