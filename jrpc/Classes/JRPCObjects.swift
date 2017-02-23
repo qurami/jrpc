@@ -40,6 +40,15 @@ public struct JRPCRequest{
         self.params = params
     }
     
+    public func toJson() throws -> String{
+        
+        var jsonData: Data
+        let raw = ["jsonrpc":"2.0", "id": self.id, "method": self.method, "params": self.params]
+        jsonData = try JSONSerialization.data(withJSONObject: raw, options: JSONSerialization.WritingOptions.prettyPrinted)
+        
+        return String(data: jsonData, encoding: String.Encoding.utf8)!
+    }
+    
     static func parametersAreValid(_ params: Any?) -> Bool{
         
         switch params {

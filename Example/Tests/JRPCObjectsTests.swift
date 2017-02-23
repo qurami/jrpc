@@ -70,5 +70,34 @@ class JRPCObjectsTests: XCTestCase {
         XCTAssertTrue( sut.id == "1" )
     }
     
+    func testThatJRPCRequestIsEncodedToJsonWithOrderedParameters(){
+        
+        let sut = try! JRPCRequest.init(id: "1", method: "mock.Method", params: ["1","2","3"])
+        let json = try! sut.toJson()
+        let raw = try! JSONSerialization.jsonObject(with: json.data(using: String.Encoding.utf8)!, options: JSONSerialization.ReadingOptions.allowFragments) as! Dictionary<String,Any>
+        
+        XCTAssertTrue(raw["id"] as! String == "1")
+        XCTAssertTrue(raw["method"] as! String == "mock.Method")
+        XCTAssertTrue(raw["jsonrpc"] as! String == "2.0")
+        XCTAssertTrue(raw["params"] as! Array<String> == ["1","2","3"])
+        
+    }
+    
+    func testThatJRPCRequestIsEncodedToJsonWithNamedParameters(){
+        
+        let sut = try! JRPCRequest.init(id: "1", method: "mock.Method", params: ["first":"1","second": "2","third": 3])
+        let json = try! sut.toJson()
+        let raw = try! JSONSerialization.jsonObject(with: json.data(using: String.Encoding.utf8)!, options: JSONSerialization.ReadingOptions.allowFragments) as! Dictionary<String,Any>
+        
+        XCTAssertTrue(raw["params"] is Dictionary<String,Any>)
+        
+        let params = raw["params"] as! Dictionary<String,Any>
+        
+        XCTAssertTrue(params["first"] as! String == "1")
+        XCTAssertTrue(params["second"] as! String == "2")
+        XCTAssertTrue(params["third"] as! Int == 3)
+        
+    }
+    
     
 }
