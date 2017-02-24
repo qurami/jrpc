@@ -76,3 +76,17 @@ public struct JRPCRequest{
         return String(data: jsonData, encoding: String.Encoding.utf8)
     }
 }
+
+public struct JRPCResponseError{
+    public let code: Int
+    public let message: String
+    public let data: Any?
+}
+
+public struct JRPCResponse{
+    public let jsonprc = "2.0"
+    public let id: String?
+    public let result: Any?
+    public let error: JRPCResponseError?
+    
+}
