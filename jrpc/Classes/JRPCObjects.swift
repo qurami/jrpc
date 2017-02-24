@@ -14,58 +14,65 @@ public enum JRPCRequestError: Error{
     case badParameters
 }
 
+public protocol JSONEncodable{}
+
+extension String: JSONEncodable{}
+extension Int: JSONEncodable{}
+extension Double: JSONEncodable{}
+extension Bool: JSONEncodable{}
+
+
+
+
 public struct JRPCRequest{
-    
-    public let id: String
+
     public let jsonRPC = "2.0"
+    public let id: String
     public let method: String
-    public let params: Any?
+    public let orderedParams: Array<JSONEncodable>?
+    public let namedParams: Dictionary<String,JSONEncodable>?
     
-    public init(id:String, method: String, params: Any?) throws {
-        guard !id.trimmingCharacters(in: CharacterSet.whitespaces).isEmpty else{
-            throw JRPCRequestError.missingID
-        }
-        
-        guard !method.trimmingCharacters(in: CharacterSet.whitespaces).isEmpty else{
-            throw JRPCRequestError.missingMethod
-        }
-        
-        guard JRPCRequest.parametersAreValid(params) else{
-            throw JRPCRequestError.badParameters
-        }
-        
+    
+    public init(id:String, method: String, namedParams: Dictionary<String,JSONEncodable>) {
+        assert(!id.trimmingCharacters(in: CharacterSet.whitespaces).isEmpty)
+        assert(!method.trimmingCharacters(in: CharacterSet.whitespaces).isEmpty)
         
         self.id = id
         self.method = method
-        self.params = params
+        self.namedParams = namedParams
+        self.orderedParams = nil
     }
     
-    public func toJson() throws -> String{
+    public init(id:String, method: String, orderedParams: Array<JSONEncodable>){
+        assert(!id.trimmingCharacters(in: CharacterSet.whitespaces).isEmpty)
+        assert(!method.trimmingCharacters(in: CharacterSet.whitespaces).isEmpty)
+        
+        self.id = id
+        self.method = method
+        self.orderedParams = orderedParams
+        self.namedParams = nil
+    }
+    
+    public func toJson() -> String?{
         
         var jsonData: Data
-        let raw = ["jsonrpc":"2.0", "id": self.id, "method": self.method, "params": self.params]
-        jsonData = try JSONSerialization.data(withJSONObject: raw, options: JSONSerialization.WritingOptions.prettyPrinted)
+        var params: Any
         
-        return String(data: jsonData, encoding: String.Encoding.utf8)!
-    }
-    
-    static func parametersAreValid(_ params: Any?) -> Bool{
-        
-        switch params {
-        case nil:
-            return true
-        case let p as Array<Any>:
-            return true
-        case let p as Dictionary<String, Any>:
-            return true
-        default:
-            return false
+        if let ordered = self.orderedParams{
+            params = ordered
+        } else {
+            params = self.namedParams!
         }
         
-
+        
+        let raw = ["jsonrpc":"2.0", "id": self.id, "method": self.method, "params":  params]
+        do{
+            jsonData = try JSONSerialization.data(withJSONObject: raw, options: JSONSerialization.WritingOptions.prettyPrinted)
+        } catch{
+            return nil
+        }
+        
+        
+        return String(data: jsonData, encoding: String.Encoding.utf8)
     }
-}
-
-struct JRPCResponse{
-
 }

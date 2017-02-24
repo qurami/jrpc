@@ -21,83 +21,78 @@ class JRPCObjectsTests: XCTestCase {
         super.tearDown()
     }
     
-    func testThatErrorIsReturnedWhenInitializingRequestWithoutID(){
-        
-        do {
-            _ = try JRPCRequest.init(id: " ", method: "", params: nil)
-            XCTFail("error should have been catched")
-        } catch let err as JRPCRequestError {
-            if err != JRPCRequestError.missingID{
-                XCTFail("catched error is not expected missingID error")
-            }
-        } catch{
-            XCTFail("catched unexpected exception")
-        }
-    }
-    
-    func testThatErrorIsReturnedWhenInitializingRequestWithoutMethod(){
-        
-        do {
-            _ = try JRPCRequest.init(id: "mockID", method: "", params: nil)
-            XCTFail("error should have been catched")
-        } catch let err as JRPCRequestError {
-            if err != JRPCRequestError.missingMethod{
-                XCTFail("catched error is not expected missingMethod error")
-            }
-        } catch{
-            XCTFail("catched unexpected exception")
-        }
-    }
-    
-    func testThatErrorIsReturnedWhenParamsAreNotValid(){
-        
-        let wrongParam = URL.init(string: "https://google.com")
-        
-        do {
-            _ = try JRPCRequest.init(id: "mockID", method: "mockMethod", params: wrongParam)
-            XCTFail("error should have been catched")
-        } catch let err as JRPCRequestError {
-            if err != JRPCRequestError.badParameters{
-                XCTFail("catched error is not expected badParameters error")
-            }
-        } catch{
-            XCTFail("catched unexpected exception")
-        }
-    }
-    
-    func testThatJRPCRequestIsInitializedCorrectly(){
-        let sut = try! JRPCRequest.init(id: "1", method: "mock.Method", params: ["1","2","3"])
-        XCTAssertTrue( sut.id == "1" )
-    }
     
     func testThatJRPCRequestIsEncodedToJsonWithOrderedParameters(){
         
-        let sut = try! JRPCRequest.init(id: "1", method: "mock.Method", params: ["1","2","3"])
-        let json = try! sut.toJson()
-        let raw = try! JSONSerialization.jsonObject(with: json.data(using: String.Encoding.utf8)!, options: JSONSerialization.ReadingOptions.allowFragments) as! Dictionary<String,Any>
+        let sut = JRPCRequest.init(id: "1", method: "mock.Method", orderedParams: ["1","2","3"])
+        let encoded = sut.toJson()
         
-        XCTAssertTrue(raw["id"] as! String == "1")
-        XCTAssertTrue(raw["method"] as! String == "mock.Method")
-        XCTAssertTrue(raw["jsonrpc"] as! String == "2.0")
-        XCTAssertTrue(raw["params"] as! Array<String> == ["1","2","3"])
-        
+        if let jsonString = encoded{
+            
+            if let data = jsonString.data(using: String.Encoding.utf8){
+                
+                if let raw = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as? Dictionary<String,Any>{
+                    
+                    XCTAssertTrue(raw?["id"] as! String == "1")
+                    XCTAssertTrue(raw?["method"] as! String == "mock.Method")
+                    XCTAssertTrue(raw?["jsonrpc"] as! String == "2.0")
+                    XCTAssertTrue(raw?["params"] as! Array<String> == ["1","2","3"])
+
+                    
+                } else{
+                    XCTFail("unexpected json parsing error")
+                }
+                
+            } else{
+                XCTFail("unexpected data parsing error")
+            }
+            
+            
+        } else{
+            XCTFail("JRPCRequest object not encoded as expected")
+        }
     }
     
     func testThatJRPCRequestIsEncodedToJsonWithNamedParameters(){
         
-        let sut = try! JRPCRequest.init(id: "1", method: "mock.Method", params: ["first":"1","second": "2","third": 3])
-        let json = try! sut.toJson()
-        let raw = try! JSONSerialization.jsonObject(with: json.data(using: String.Encoding.utf8)!, options: JSONSerialization.ReadingOptions.allowFragments) as! Dictionary<String,Any>
+        let sut = JRPCRequest.init(id: "1", method: "mock.Method", namedParams: ["first": "1","second": 2, "third": true])
         
-        XCTAssertTrue(raw["params"] is Dictionary<String,Any>)
+        let encoded = sut.toJson()
         
-        let params = raw["params"] as! Dictionary<String,Any>
-        
-        XCTAssertTrue(params["first"] as! String == "1")
-        XCTAssertTrue(params["second"] as! String == "2")
-        XCTAssertTrue(params["third"] as! Int == 3)
-        
+        if let jsonString = encoded{
+            
+            if let data = jsonString.data(using: String.Encoding.utf8){
+                
+                if let raw = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as? Dictionary<String,Any>{
+                    
+                    XCTAssertTrue(raw?["id"] as? String == "1")
+                    XCTAssertTrue(raw?["method"] as? String == "mock.Method")
+                    XCTAssertTrue(raw?["jsonrpc"] as? String == "2.0")
+
+                    
+                    if let params = raw?["params"] as? Dictionary<String,Any>{
+                        XCTAssertTrue(params["first"] as? String == "1")
+                        XCTAssertTrue(params["second"] as? Int == 2)
+                        XCTAssertTrue(params["third"] as? Bool == true)
+                    } else{
+                        XCTFail("unable to parse params to dictionary")
+                    }
+
+                    
+                } else{
+                    XCTFail("unexpected json parsing error")
+                }
+                
+            } else{
+                XCTFail("unexpected data parsing error")
+            }
+            
+            
+        } else{
+            XCTFail("JRPCRequest object not encoded as expected")
+        }
     }
+    
     
     
 }
