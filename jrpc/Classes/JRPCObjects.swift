@@ -26,7 +26,6 @@ extension Bool: JSONEncodable{}
 
 public struct JRPCRequest{
 
-    public let jsonRPC = "2.0"
     public let id: String
     public let method: String
     public let orderedParams: Array<JSONEncodable>?
@@ -84,7 +83,6 @@ public struct JRPCResponseError{
 }
 
 public struct JRPCResponse{
-    public let jsonprc = "2.0"
     public let id: String?
     public let result: Any?
     public let error: JRPCResponseError?
