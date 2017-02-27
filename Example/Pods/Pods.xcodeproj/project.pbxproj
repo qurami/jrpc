@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		077E7051279F43FB7EC83F113828B430 /* Pods-jrpc_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D8B6023C24FAE98EDB7637A8B9F1434F /* Pods-jrpc_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3F5ABA6F9DECE8FC564AA15BF1E685FC /* jrpc-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A47FDE126836ACDD7B859C5C9BAE6FA7 /* jrpc-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		457A0FC91E60B03000B69F84 /* JRPCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A0FC81E60B03000B69F84 /* JRPCClient.swift */; };
 		8D9284B2C46ED51DD578AD8C07A30A52 /* Pods-jrpc_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FEB392AE579A5F06CCFDF65B1EC5EB4 /* Pods-jrpc_Tests-dummy.m */; };
 		9D0D9A1FAE57E15B5CF55639E71E6704 /* JRPCObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EC27879898AE2999E4F8192826B8F3 /* JRPCObjects.swift */; };
 		A38A1EBB9C9FD8C5A224A359E313F9E6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
@@ -27,26 +28,27 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		09D426FC666D805968EE8BF15DB25B00 /* jrpc.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = jrpc.framework; path = jrpc.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		09D426FC666D805968EE8BF15DB25B00 /* jrpc.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = jrpc.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2335162D9179FE3BB2BB70452FAD1683 /* jrpc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = jrpc.xcconfig; sourceTree = "<group>"; };
 		25BB6080146F145D3CA88569C491C82C /* jrpc-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "jrpc-dummy.m"; sourceTree = "<group>"; };
 		25DC107B697C6489EE19D546CF9B349C /* jrpc-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "jrpc-prefix.pch"; sourceTree = "<group>"; };
 		2DDEE3F01CE675B1F27BD861043FD8E8 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		34EC27879898AE2999E4F8192826B8F3 /* JRPCObjects.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JRPCObjects.swift; sourceTree = "<group>"; };
+		457A0FC81E60B03000B69F84 /* JRPCClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JRPCClient.swift; sourceTree = "<group>"; };
 		4590E7FD57EE485121861138CB227D38 /* Pods-jrpc_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-jrpc_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		637FCC18E84D82AFF0028402600DA836 /* Pods-jrpc_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-jrpc_Tests.modulemap"; sourceTree = "<group>"; };
+		637FCC18E84D82AFF0028402600DA836 /* Pods-jrpc_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-jrpc_Tests.modulemap"; sourceTree = "<group>"; };
 		6B53198D42F0382B9EC70718A9AFDE3C /* Pods-jrpc_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-jrpc_Tests-frameworks.sh"; sourceTree = "<group>"; };
 		7935599B559CDCB7AA96D4DF6B02163E /* Pods-jrpc_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-jrpc_Tests-resources.sh"; sourceTree = "<group>"; };
 		7FEB392AE579A5F06CCFDF65B1EC5EB4 /* Pods-jrpc_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-jrpc_Tests-dummy.m"; sourceTree = "<group>"; };
 		7FFEED55C1C5E25752A121797EF46757 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		A1EB2E675320DB1B8E63717528B53302 /* jrpc.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = jrpc.modulemap; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A1EB2E675320DB1B8E63717528B53302 /* jrpc.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = jrpc.modulemap; sourceTree = "<group>"; };
 		A47FDE126836ACDD7B859C5C9BAE6FA7 /* jrpc-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "jrpc-umbrella.h"; sourceTree = "<group>"; };
 		CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		D8B6023C24FAE98EDB7637A8B9F1434F /* Pods-jrpc_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-jrpc_Tests-umbrella.h"; sourceTree = "<group>"; };
 		DF0E21256CE6B084B011AF0CC03CBFEA /* Pods-jrpc_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-jrpc_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		EDE24D028A35D86EAF4D876191B21138 /* Pods-jrpc_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-jrpc_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
-		FA02A16B81CE761365CFA1AD98DEE7DE /* Pods_jrpc_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_jrpc_Tests.framework; path = "Pods-jrpc_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA02A16B81CE761365CFA1AD98DEE7DE /* Pods_jrpc_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_jrpc_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB0011F986FD67F2B85983D0C72F4C2F /* Pods-jrpc_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-jrpc_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -83,8 +85,8 @@
 			isa = PBXGroup;
 			children = (
 				34EC27879898AE2999E4F8192826B8F3 /* JRPCObjects.swift */,
+				457A0FC81E60B03000B69F84 /* JRPCClient.swift */,
 			);
-			name = Classes;
 			path = Classes;
 			sourceTree = "<group>";
 		};
@@ -134,7 +136,6 @@
 			children = (
 				63CF0DCC5DBB6919B2DCDE255BE6AD47 /* Classes */,
 			);
-			name = jrpc;
 			path = jrpc;
 			sourceTree = "<group>";
 		};
@@ -280,6 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBEBBBEEB0B7AB8CAAD2344D5E281E97 /* jrpc-dummy.m in Sources */,
+				457A0FC91E60B03000B69F84 /* JRPCClient.swift in Sources */,
 				9D0D9A1FAE57E15B5CF55639E71E6704 /* JRPCObjects.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
