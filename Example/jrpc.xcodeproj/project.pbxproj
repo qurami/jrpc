@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4584C1A41E5F8644009D6187 /* JRPCObjectsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4584C1A31E5F8644009D6187 /* JRPCObjectsTests.swift */; };
+		45FA0D4F1E64BF8900AEC502 /* JRPCClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA0D4E1E64BF8900AEC502 /* JRPCClientTests.swift */; };
 		B36357D127F1B823D26EDFF9 /* Pods_jrpc_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09D2E43E5275CF8F461B2AAF /* Pods_jrpc_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -15,6 +16,7 @@
 		09D2E43E5275CF8F461B2AAF /* Pods_jrpc_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_jrpc_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		12818AA62A14CC4C2FD08F75 /* jrpc.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = jrpc.podspec; path = ../jrpc.podspec; sourceTree = "<group>"; };
 		4584C1A31E5F8644009D6187 /* JRPCObjectsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JRPCObjectsTests.swift; sourceTree = "<group>"; };
+		45FA0D4E1E64BF8900AEC502 /* JRPCClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JRPCClientTests.swift; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* jrpc_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = jrpc_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		80CE9B4587A5EC57E5A97A98 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				45FA0D4E1E64BF8900AEC502 /* JRPCClientTests.swift */,
 				4584C1A31E5F8644009D6187 /* JRPCObjectsTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -220,6 +223,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4584C1A41E5F8644009D6187 /* JRPCObjectsTests.swift in Sources */,
+				45FA0D4F1E64BF8900AEC502 /* JRPCClientTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

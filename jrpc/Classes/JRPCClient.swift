@@ -8,25 +8,66 @@
 
 import Foundation
 
-enum JRPCClientError: Error{
+public enum JRPCClientError: Error{
     case unableToParseRequest
     case unableToParseResponse
     case badJSONRPCVersion
 }
 
+
+
+/// A protocol used by the client to parse a passed Request to JSON.
+public protocol JRPCParsable{
+    
+    
+    /// Must return a JSONRPC 2.0 compliant request object, for furter informations
+    /// refer to http://www.jsonrpc.org/specification#request_object
+    func toJSON() -> String?
+}
+
+extension JRPCRequest: JRPCParsable{}
+
+/**
+ A client that performs JSONRPC 2.0 requests
+ */
 public class JRPCClient{
     
-    public init() {
-        // This initializer intentionally left empty
+    /// the http headers to pass along with the JSONRPC request, contains
+    /// `Content-Type: application/json` by default
+    public var httpHeader: Dictionary<String,String>
+    
+    /**
+     Initializes a new JRPCClient with the passed header fields
+     
+     - Parameters:
+        - header: header fields to pass along with the JSONRPC request, headers are `Content-Type: application/json`  by default
+     
+     - Returns: a newly initialized JRPCClient
+     */
+    public init(header: Dictionary<String,String> = ["Content-Type":"application/json"]) {
+        self.httpHeader = header
     }
     
-    public func perform(request jrpcRequest: JRPCRequest, withURL endpointURL: URL, responseHandler callback: @escaping (JRPCResponse?, Error?) -> Void ){
+    /**
+     Performs a JSONRPC request to the specified endpoint.
+     
+     - Parameters:
+        - jrpcRequest: the JSONRPC request to perform, could be a JRPCRequest or any object implementing the JRPCParsable protocol
+        - endpointURL: url of the JSONRPC server
+        - callback: the callback closure that gets executed when the http operation finishes
+     */
+    public func perform(request jrpcRequest: JRPCParsable, withURL endpointURL: URL, responseHandler callback: @escaping (JRPCResponse?, Error?) -> Void ){
         
-        if let jsonData = jrpcRequest.toJson()!.data(using: String.Encoding.utf8) {
+        if let jsonData = jrpcRequest.toJSON()?.data(using: String.Encoding.utf8) {
             
             let request = NSMutableURLRequest(url: endpointURL)
             request.httpMethod = "POST"
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            for headerField in self.httpHeader.keys{
+                    request.addValue(self.httpHeader[headerField]!, forHTTPHeaderField: headerField)
+            }
+            
+            
             request.httpBody = jsonData
             
             let dataTask = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (result, urlresponse, error) in
@@ -51,6 +92,7 @@ public class JRPCClient{
         }
     }
     
+    // parses a dictionary into a JRPCResponse, returns an error if something goes wrong.
     static func parseJRPCResponse(dictionary: Dictionary<String,Any>) -> (response: JRPCResponse?,error: JRPCClientError?){
         
         guard dictionary["jsonrpc"] != nil && dictionary["jsonrpc"] as? String == "2.0" else{
@@ -84,6 +126,7 @@ public class JRPCClient{
         return (JRPCResponse(id: ID, result: dictionary["result"], error: jrpcError), nil)
     }
     
+    // parses a dictionary into a JRPCResponseError, returns an error if something goes wrong.
     static func parseJRPCResponseError(dictionary: Dictionary<String,Any>) -> (jrpcError: JRPCResponseError?,error: JRPCClientError?){
         
         guard dictionary["code"] != nil && dictionary["code"] is Int else{

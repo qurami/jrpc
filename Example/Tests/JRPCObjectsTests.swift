@@ -25,7 +25,7 @@ class JRPCObjectsTests: XCTestCase {
     func testThatJRPCRequestIsEncodedToJsonWithOrderedParameters(){
         
         let sut = JRPCRequest.init(id: "1", method: "mock.Method", orderedParams: ["1","2","3"])
-        let encoded = sut.toJson()
+        let encoded = sut.toJSON()
         
         if let jsonString = encoded{
             
@@ -57,7 +57,7 @@ class JRPCObjectsTests: XCTestCase {
         
         let sut = JRPCRequest.init(id: "1", method: "mock.Method", namedParams: ["first": "1","second": 2, "third": true])
         
-        let encoded = sut.toJson()
+        let encoded = sut.toJSON()
         
         if let jsonString = encoded{
             
