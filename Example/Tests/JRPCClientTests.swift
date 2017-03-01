@@ -180,7 +180,7 @@ enum MockError: Error{
 
 struct ErroredJRPCRequest: JRPCParsable {
     func toJSON() -> String?{
-        return "yadda"
+        return nil
     }
 }
 

@@ -58,38 +58,41 @@ public class JRPCClient{
      */
     public func perform(request jrpcRequest: JRPCParsable, withURL endpointURL: URL, responseHandler callback: @escaping (JRPCResponse?, Error?) -> Void ){
         
-        if let jsonData = jrpcRequest.toJSON()?.data(using: String.Encoding.utf8) {
+        let jsonData = jrpcRequest.toJSON()?.data(using: String.Encoding.utf8)
+        if jsonData == nil{
+            callback(nil,JRPCClientError.unableToParseRequest)
+            return
+        }
+        
+        let request = NSMutableURLRequest(url: endpointURL)
+        request.httpMethod = "POST"
+        
+        for headerField in self.httpHeader.keys{
+            request.addValue(self.httpHeader[headerField]!, forHTTPHeaderField: headerField)
+        }
+        
+        request.httpBody = jsonData
+        
+        let dataTask = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (result, urlresponse, error) in
             
-            let request = NSMutableURLRequest(url: endpointURL)
-            request.httpMethod = "POST"
-            
-            for headerField in self.httpHeader.keys{
-                    request.addValue(self.httpHeader[headerField]!, forHTTPHeaderField: headerField)
+            if error != nil{
+                callback(nil, error)
+                return
             }
             
+            if let rawJson = try? JSONSerialization.jsonObject(with: result!),
+                let rawResponseDictionary = rawJson as? [String: Any]{
+                let parseResult = JRPCClient.parseJRPCResponse(dictionary: rawResponseDictionary)
+                callback(parseResult.response, parseResult.error)
+                return
+            }
             
-            request.httpBody = jsonData
-            
-            let dataTask = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (result, urlresponse, error) in
-                
-                if error != nil{
-                    callback(nil, error)
-                } else if result != nil {
-                    
-                    if let rawJson = try? JSONSerialization.jsonObject(with: result!),
-                        let rawResponseDictionary = rawJson as? [String: Any]{
-                        let parseResult = JRPCClient.parseJRPCResponse(dictionary: rawResponseDictionary)
-                        callback(parseResult.response, parseResult.error)
-                    } else{
-                        callback(nil,JRPCClientError.unableToParseRequest)
-                    }
-                }
-            })
-            dataTask.resume()
-        
-        } else{
             callback(nil,JRPCClientError.unableToParseRequest)
-        }
+            
+            
+        })
+        dataTask.resume()
+        
     }
     
     // parses a dictionary into a JRPCResponse, returns an error if something goes wrong.
@@ -101,7 +104,7 @@ public class JRPCClient{
         
         guard (dictionary["id"] == nil && dictionary["error"] != nil) ||
             (dictionary["id"] != nil && (dictionary["id"] is String || dictionary["id"] is Int)) else{
-            return (nil, JRPCClientError.unableToParseResponse)
+                return (nil, JRPCClientError.unableToParseResponse)
         }
         
         guard dictionary["error"] != nil || dictionary["result"] != nil else{
@@ -120,7 +123,7 @@ public class JRPCClient{
         
         var ID: String? = nil
         if let rawID = dictionary["id"]{
-                ID = "\(rawID)"
+            ID = "\(rawID)"
         }
         
         return (JRPCResponse(id: ID, result: dictionary["result"], error: jrpcError), nil)
@@ -137,9 +140,12 @@ public class JRPCClient{
             return (nil, JRPCClientError.unableToParseResponse)
         }
         
-        let code = dictionary["code"] as! Int
-        let message = dictionary["message"] as! String
         
-        return (JRPCResponseError(code: code , message: message, data: dictionary["data"]),nil)
+        if let code = dictionary["code"] as? Int , let message = dictionary["message"] as? String{
+            return (JRPCResponseError(code: code , message: message, data: dictionary["data"]),nil)
+        }else{
+            return (nil, JRPCClientError.unableToParseResponse)
+        }
+        
     }
 }
