@@ -12,7 +12,7 @@ import OHHTTPStubs
 
 class JRPCClientTests: XCTestCase {
     
-    let mockJRPCRequest = JRPCRequest(id: "1010", method: "mockMethod", namedParams: ["mock":"param"])
+    let mockJRPCRequest = JRPCRequest(id: "1010", method: "mockMethod", params: ["mock":"param"])
    
     let mockJRPCResponse = "{\"jsonrpc\":\"2.0\", \"id\":\"1010\",\"result\":{\"mock\":\"value\"},\"error\": null}"
     
