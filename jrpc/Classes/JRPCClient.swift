@@ -75,20 +75,23 @@ public class JRPCClient{
         
         let dataTask = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (result, urlresponse, error) in
             
+            // checking http error
             if error != nil{
                 callback(nil, error)
                 return
             }
             
-            if let rawJson = try? JSONSerialization.jsonObject(with: result!),
-                let rawResponseDictionary = rawJson as? [String: Any]{
-                let parseResult = JRPCClient.parseJRPCResponse(dictionary: rawResponseDictionary)
-                callback(parseResult.response, parseResult.error)
+            // checking response is parsable
+            let rawJson = try? JSONSerialization.jsonObject(with: result!)
+            let rawResponseDictionary = rawJson as? [String: Any]
+            if rawResponseDictionary == nil{
+                callback(nil,JRPCClientError.unableToParseRequest)
                 return
             }
             
-            callback(nil,JRPCClientError.unableToParseRequest)
-            
+            // returning parse result
+            let parseResult = JRPCClient.parseJRPCResponse(dictionary: rawResponseDictionary!)
+            callback(parseResult.response, parseResult.error)
             
         })
         dataTask.resume()
