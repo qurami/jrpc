@@ -3,7 +3,7 @@
 //  Pods
 //
 //  Created by Marco Musella on 23/02/2017.
-//
+//  Copyright © 2017 Quami s.r.l. All rights reserved.
 //
 
 import Foundation

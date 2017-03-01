@@ -3,7 +3,7 @@
 //  jrpc
 //
 //  Created by Marco Musella on 27/02/2017.
-//  Copyright © 2017 CocoaPods. All rights reserved.
+//  Copyright © 2017 Quami s.r.l. All rights reserved.
 //
 
 import XCTest
