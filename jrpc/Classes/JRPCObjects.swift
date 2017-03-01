@@ -18,7 +18,7 @@ import Foundation
 @objc public class JRPCRequest: NSObject{
 
     /// the ID of the request object
-    public let id: String
+    public let ID: String
     /// the remote method to call on the JSONRPC server
     public let method: String
     /// the parameters for the remote method
@@ -30,17 +30,17 @@ import Foundation
      parameters passing method.
      
      - Parameters:
-        - id: the id of the JSONRPC request
+        - ID: the id of the JSONRPC request
         - method: the remote method to call
         - params: the dictionary or array of named parameters, depending on the chosen param input method
      
      - Returns: a new JRPCRequest object with named parameters.
      */
-    public init(id:String, method: String, params: Any?) {
-        assert(!id.trimmingCharacters(in: CharacterSet.whitespaces).isEmpty)
+    public init(ID:String, method: String, params: Any?) {
+        assert(!ID.trimmingCharacters(in: CharacterSet.whitespaces).isEmpty)
         assert(!method.trimmingCharacters(in: CharacterSet.whitespaces).isEmpty)
         
-        self.id = id
+        self.ID = ID
         self.method = method
         self.params = params
         super.init()
@@ -52,7 +52,7 @@ import Foundation
         
         var jsonData: Data
         
-        let raw = ["jsonrpc":"2.0", "id": self.id, "method": self.method, "params":  self.params]
+        let raw = ["jsonrpc":"2.0", "id": self.ID, "method": self.method, "params":  self.params]
         do{
             jsonData = try JSONSerialization.data(withJSONObject: raw, options: JSONSerialization.WritingOptions.prettyPrinted)
         } catch{
@@ -98,7 +98,7 @@ import Foundation
  */
 @objc public class JRPCResponse: NSObject{
     /// the ID of the JSONRPC response
-    public let id: String?
+    public let ID: String?
     /// the result of the remote method
     public let result: Any?
     /// the error
@@ -107,12 +107,12 @@ import Foundation
     /** Initializes and returns a JRPCResponseError
      
      - Parameters:
-        - id: the id of the response, nil if the response is errored
+        - ID: the id of the response, nil if the response is errored
         - result: the message of the remote procedure, nil if the response is errored
         - error: the error of the remote procedure, nil if the reponse is successful
      */
-    public init(id: String?, result: Any?, error: JRPCResponseError?){
-        self.id = id
+    public init(ID: String?, result: Any?, error: JRPCResponseError?){
+        self.ID = ID
         self.result = result
         self.error = error
         super.init()

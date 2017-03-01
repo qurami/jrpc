@@ -12,7 +12,7 @@ import OHHTTPStubs
 
 class JRPCClientTests: XCTestCase {
     
-    let mockJRPCRequest = JRPCRequest(id: "1010", method: "mockMethod", params: ["mock":"param"])
+    let mockJRPCRequest = JRPCRequest(ID: "1010", method: "mockMethod", params: ["mock":"param"])
    
     let mockJRPCResponse = "{\"jsonrpc\":\"2.0\", \"id\":\"1010\",\"result\":{\"mock\":\"value\"},\"error\": null}"
     
@@ -113,7 +113,7 @@ class JRPCClientTests: XCTestCase {
             }
             
             if let resp = jrpcresponse,
-                resp.id != "1010",
+                resp.ID != "1010",
                 (resp.result as? Dictionary<String,String>)?["mock"] != "value" {
                 XCTFail("received response is different than expected: \(resp)")
             }

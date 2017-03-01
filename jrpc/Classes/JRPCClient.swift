@@ -131,7 +131,7 @@ extension JRPCRequest: JRPCParsable{}
             ID = "\(rawID)"
         }
         
-        return (JRPCResponse(id: ID, result: dictionary["result"], error: jrpcError), nil)
+        return (JRPCResponse(ID: ID, result: dictionary["result"], error: jrpcError), nil)
     }
     
     // parses a dictionary into a JRPCResponseError, returns an error if something goes wrong.
