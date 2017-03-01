@@ -1,18 +1,18 @@
 {
   "name": "jrpc",
   "version": "0.1.0",
-  "summary": "A short description of jrpc.",
-  "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/qurami-robot/jrpc",
+  "summary": "JSON-RPC 2.0 Client",
+  "description": "jrpc is a JSON-RPC 2.0 client written in swift.\nfor more information about JSON-RPC 2.0 please refer to: http://www.jsonrpc.org/specification",
+  "homepage": "https://github.com/qurami/jrpc",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
   },
   "authors": {
-    "qurami-robot": "mar.musella@gmail.com"
+    "Marco Musella": "mar.musella@gmail.com"
   },
   "source": {
-    "git": "https://github.com/qurami-robot/jrpc.git",
+    "git": "https://github.com/qurami/jrpc.git",
     "tag": "0.1.0"
   },
   "platforms": {

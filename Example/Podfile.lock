@@ -1,16 +1,34 @@
 PODS:
   - jrpc (0.1.0)
+  - OHHTTPStubs (5.2.3):
+    - OHHTTPStubs/Default (= 5.2.3)
+  - OHHTTPStubs/Core (5.2.3)
+  - OHHTTPStubs/Default (5.2.3):
+    - OHHTTPStubs/Core
+    - OHHTTPStubs/JSON
+    - OHHTTPStubs/NSURLSession
+    - OHHTTPStubs/OHPathHelpers
+  - OHHTTPStubs/JSON (5.2.3):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/NSURLSession (5.2.3):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/OHPathHelpers (5.2.3)
+  - OHHTTPStubs/Swift (5.2.3):
+    - OHHTTPStubs/Core
 
 DEPENDENCIES:
   - jrpc (from `../`)
+  - OHHTTPStubs
+  - OHHTTPStubs/Swift
 
 EXTERNAL SOURCES:
   jrpc:
     :path: "../"
 
 SPEC CHECKSUMS:
-  jrpc: e8643119074060dcc0a0b76730cc183aeb113f41
+  jrpc: bc6258d6b0fbd611b9f7ab26948ce2b54198a1d5
+  OHHTTPStubs: e238cd5b66d8efa51c861db45895de8fe079f4a7
 
-PODFILE CHECKSUM: 05477d023300667a9574c6d13457f64ab2644cc9
+PODFILE CHECKSUM: 3690747f8d520720be55b3acc0aff0bee999b55f
 
 COCOAPODS: 1.2.0.beta.1
