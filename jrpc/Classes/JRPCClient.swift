@@ -17,7 +17,7 @@ public enum JRPCClientError: Error{
 
 
 /// A protocol used by the client to parse a passed Request to JSON.
-public protocol JRPCParsable{
+@objc public protocol JRPCParsable{
     
     
     /// Must return a JSONRPC 2.0 compliant request object, for furter informations
@@ -30,7 +30,7 @@ extension JRPCRequest: JRPCParsable{}
 /**
  A client that performs JSONRPC 2.0 requests
  */
-public class JRPCClient{
+@objc public class JRPCClient: NSObject{
     
     /// the http headers to pass along with the JSONRPC request, contains
     /// `Content-Type: application/json` by default
@@ -46,6 +46,7 @@ public class JRPCClient{
      */
     public init(header: Dictionary<String,String> = ["Content-Type":"application/json"]) {
         self.httpHeader = header
+        super.init()
     }
     
     /**
@@ -56,7 +57,7 @@ public class JRPCClient{
         - endpointURL: url of the JSONRPC server
         - callback: the callback closure that gets executed when the http operation finishes
      */
-    public func perform(request jrpcRequest: JRPCParsable, withURL endpointURL: URL, responseHandler callback: @escaping (JRPCResponse?, Error?) -> Void ){
+    @objc public func performRPC(request jrpcRequest: JRPCParsable, remoteURL endpointURL: URL, responseHandler callback: @escaping (JRPCResponse?, Error?) -> Void ){
         
         let jsonData = jrpcRequest.toJSON()?.data(using: String.Encoding.utf8)
         if jsonData == nil{

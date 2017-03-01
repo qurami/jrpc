@@ -15,7 +15,7 @@ import Foundation
     Since JSON RPC allows two different methods for passing parameters, named or positional, 
     this exposes a generic type Any params attribute.
 */
- public struct JRPCRequest{
+@objc public class JRPCRequest: NSObject{
 
     /// the ID of the request object
     public let id: String
@@ -43,6 +43,7 @@ import Foundation
         self.id = id
         self.method = method
         self.params = params
+        super.init()
     }
     
     /// Returns a JSON representation of the JRPCRequest, returns nil if the JSON encoding 
@@ -65,7 +66,7 @@ import Foundation
 
 /// A JSON RPC 2.0 error object
 /// for further informations refer to http://www.jsonrpc.org/specification#error_object
-public struct JRPCResponseError{
+@objc public class JRPCResponseError: NSObject{
     
     /// the error code of the JSONRPC error object
     public let code: Int
@@ -73,6 +74,20 @@ public struct JRPCResponseError{
     public let message: String
     /// a payload attached to the error
     public let data: Any?
+    
+    /** Initializes and returns a JRPCResponseError
+     
+     - Parameters:
+        - code: the error code
+        - message: the error message
+        - data: a custom payload to attach to the error
+    */
+    public init(code: Int, message: String, data: Any?) {
+        self.code = code
+        self.message = message
+        self.data = data
+        super.init()
+    }
 }
 
 /* A JSON RPC 2.0 response object
@@ -81,11 +96,25 @@ public struct JRPCResponseError{
  As the specification states, when a response has errors the id and the result fields are null
  and the error field contains informations about the error.
  */
-public struct JRPCResponse{
+@objc public class JRPCResponse: NSObject{
     /// the ID of the JSONRPC response
     public let id: String?
     /// the result of the remote method
     public let result: Any?
     /// the error
     public let error: JRPCResponseError?
+    
+    /** Initializes and returns a JRPCResponseError
+     
+     - Parameters:
+        - id: the id of the response, nil if the response is errored
+        - result: the message of the remote procedure, nil if the response is errored
+        - error: the error of the remote procedure, nil if the reponse is successful
+     */
+    public init(id: String?, result: Any?, error: JRPCResponseError?){
+        self.id = id
+        self.result = result
+        self.error = error
+        super.init()
+    }
 }

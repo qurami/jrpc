@@ -53,7 +53,7 @@ class JRPCClientTests: XCTestCase {
         let sut = JRPCClient()
         let endpointExp = expectation(description: "endpoint test passed")
         
-        sut.perform(request: mockJRPCRequest, withURL: self.mockEndpointURL!) { (jrpcresponse, error) in
+        sut.performRPC(request: mockJRPCRequest, remoteURL: self.mockEndpointURL!) { (jrpcresponse, error) in
             if error != nil {
                 XCTFail("received unexpected error:\n \(error)")
             }
@@ -87,7 +87,7 @@ class JRPCClientTests: XCTestCase {
         let sut = JRPCClient(header: customHeader)
         let endpointExp = expectation(description: "endpoint test passed")
         
-        sut.perform(request: mockJRPCRequest, withURL: self.mockEndpointURL!) { (jrpcresponse, error) in
+        sut.performRPC(request: mockJRPCRequest, remoteURL: self.mockEndpointURL!) { (jrpcresponse, error) in
             if error != nil {
                 XCTFail("received unexpected error:\n \(error)")
             }
@@ -106,7 +106,7 @@ class JRPCClientTests: XCTestCase {
         let sut = JRPCClient()
         let responseExp = expectation(description: "expected response received")
         
-        sut.perform(request: mockJRPCRequest, withURL: self.mockEndpointURL!) { (jrpcresponse, error) in
+        sut.performRPC(request: mockJRPCRequest, remoteURL: self.mockEndpointURL!) { (jrpcresponse, error) in
             
             if error != nil {
                 XCTFail("received unexpected error:\n \(error)")
@@ -133,7 +133,7 @@ class JRPCClientTests: XCTestCase {
         let sut = JRPCClient()
         let parseExp = expectation(description: "json parsing error received")
         
-        sut.perform(request: erroredReq, withURL: self.mockEndpointURL!) { (response, error) in
+        sut.performRPC(request: erroredReq, remoteURL: self.mockEndpointURL!) { (response, error) in
             
             if let jrpcError = error as? JRPCClientError{
                 if jrpcError != JRPCClientError.unableToParseRequest{
@@ -157,7 +157,7 @@ class JRPCClientTests: XCTestCase {
         let errorExp = expectation(description: "datatask error received")
         let sut = JRPCClient()
         
-        sut.perform(request: self.mockJRPCRequest, withURL: URL(string:"mockerroreddatatask.com")!, responseHandler: { (response, error) in
+        sut.performRPC(request: self.mockJRPCRequest, remoteURL: URL(string:"mockerroreddatatask.com")!, responseHandler: { (response, error) in
             if let err = error as? MockError, err != MockError.mockHTTPError{
               XCTFail("expected error not received")
             }
@@ -178,7 +178,7 @@ enum MockError: Error{
     case mockHTTPError
 }
 
-struct ErroredJRPCRequest: JRPCParsable {
+class ErroredJRPCRequest: NSObject, JRPCParsable {
     func toJSON() -> String?{
         return nil
     }
