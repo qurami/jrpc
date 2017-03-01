@@ -118,9 +118,10 @@ public class JRPCClient{
         var jrpcError: JRPCResponseError? = nil
         if let rawError = dictionary["error"] as? Dictionary<String,Any>{
             let jrpcErrorParsingResult = JRPCClient.parseJRPCResponseError(dictionary: rawError)
-            if let parseDictionaryError = jrpcErrorParsingResult.error{
+            if jrpcErrorParsingResult.error != nil{
                 return (nil, JRPCClientError.unableToParseResponse)
             }
+            
             jrpcError = jrpcErrorParsingResult.jrpcError
         }
         

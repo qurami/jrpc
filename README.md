@@ -32,7 +32,7 @@ pod "jrpc"
 
 ## Author
 
-Marco Musella, mar.musella@gmail.com
+Marco Musella
 
 ## License
 
