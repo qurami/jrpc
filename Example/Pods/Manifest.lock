@@ -1,5 +1,5 @@
 PODS:
-  - jrpc (0.1.0)
+  - jrpc (0.1.0-beta)
   - OHHTTPStubs (5.2.3):
     - OHHTTPStubs/Default (= 5.2.3)
   - OHHTTPStubs/Core (5.2.3)
@@ -26,9 +26,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  jrpc: bc6258d6b0fbd611b9f7ab26948ce2b54198a1d5
+  jrpc: 18809df6734648427b9a198463038dababeaf7f3
   OHHTTPStubs: e238cd5b66d8efa51c861db45895de8fe079f4a7
 
 PODFILE CHECKSUM: 3690747f8d520720be55b3acc0aff0bee999b55f
 
-COCOAPODS: 1.2.0.beta.1
+COCOAPODS: 1.2.0
