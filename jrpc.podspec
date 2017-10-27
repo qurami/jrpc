@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'jrpc'
-  s.version          = '0.1.0-beta'
+  s.version          = '0.1.1-beta'
   s.summary          = 'JSON-RPC 2.0 Client'
 
 # This description is used to generate tags and improve search results.

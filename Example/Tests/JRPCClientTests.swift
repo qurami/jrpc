@@ -55,7 +55,7 @@ class JRPCClientTests: XCTestCase {
         
         sut.performRPC(request: mockJRPCRequest, remoteURL: self.mockEndpointURL!) { (jrpcresponse, error) in
             if error != nil {
-                XCTFail("received unexpected error:\n \(error)")
+                XCTFail("received unexpected error:\n \(String(describing: error))")
             }
             endpointExp.fulfill()
         }
@@ -89,7 +89,7 @@ class JRPCClientTests: XCTestCase {
         
         sut.performRPC(request: mockJRPCRequest, remoteURL: self.mockEndpointURL!) { (jrpcresponse, error) in
             if error != nil {
-                XCTFail("received unexpected error:\n \(error)")
+                XCTFail("received unexpected error:\n \(String(describing: error))")
             }
             endpointExp.fulfill()
         }
@@ -109,7 +109,7 @@ class JRPCClientTests: XCTestCase {
         sut.performRPC(request: mockJRPCRequest, remoteURL: self.mockEndpointURL!) { (jrpcresponse, error) in
             
             if error != nil {
-                XCTFail("received unexpected error:\n \(error)")
+                XCTFail("received unexpected error:\n \(String(describing: error))")
             }
             
             if let resp = jrpcresponse,
@@ -140,7 +140,7 @@ class JRPCClientTests: XCTestCase {
                     XCTFail("received jrpc client error is different than expected \(jrpcError)")
                 }
             } else{
-                XCTFail("received error is different than expected \(error)")
+                XCTFail("received error is different than expected \(String(describing: error))")
             }
             
             parseExp.fulfill()
